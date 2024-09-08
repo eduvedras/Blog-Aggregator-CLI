@@ -10,7 +10,7 @@ import (
 type cliCommand struct {
 	name        string
 	description string
-	callback    func(...string) error
+	callback    func(*config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -20,6 +20,21 @@ func getCommands() map[string]cliCommand {
 			description: "Displays a help message",
 			callback:    commandHelp,
 		},
+		"healthz": {
+			name:        "healthz",
+			description: "Check the status of the server",
+			callback:    commandHealthz,
+		},
+		"new_user": {
+			name:        "new_user",
+			description: "Creates a new user",
+			callback:    commandCreateUser,
+		},
+		"login": {
+			name:        "login",
+			description: "Log in into a user account",
+			callback:    commandLogIn,
+		},
 	}
 }
 
@@ -27,7 +42,7 @@ func cleanInput(input string) []string {
 	return strings.Fields(strings.ToLower(input))
 }
 
-func startRepl() {
+func startRepl(conf *config) {
 	commands := getCommands()
 	reader := bufio.NewScanner(os.Stdin)
 	for {
@@ -47,7 +62,7 @@ func startRepl() {
 		}
 
 		if command, exists := commands[commandName]; exists {
-			err := command.callback(args...)
+			err := command.callback(conf, args...)
 			if err != nil {
 				fmt.Println(err)
 			}
