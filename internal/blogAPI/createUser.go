@@ -6,16 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"time"
 )
-
-type User struct {
-	ID        string    `json:"id"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
-	Name      string    `json:"name"`
-	APIKey    string    `json:"api_key"`
-}
 
 func (c *Client) CreateUser(name string) (User, error) {
 	url := baseURL + "/users"
