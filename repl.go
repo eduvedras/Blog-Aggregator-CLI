@@ -64,6 +64,18 @@ func getCommands() map[string]cliCommand {
 			format:      "unfollow_feed <feed_follow_ID>",
 			callback:    commandUnfollowFeed,
 		},
+		"get_feed_follows": {
+			name:        "get_feed_follows",
+			description: "Get the feed_follows of the user",
+			format:      "get_feed_follows",
+			callback:    commandGetFeedFollows,
+		},
+		"get_posts": {
+			name:        "get_posts",
+			description: "Get the posts of the feeds followed by the user. There is an optional limit parameter to specify the number of posts you want to list, it defaults to 10.",
+			format:      "get_posts [--limit <number>]",
+			callback:    commandGetPosts,
+		},
 	}
 }
 
